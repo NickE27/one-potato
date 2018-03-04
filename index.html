@@ -34,18 +34,19 @@ const date = new Date(Date.now()).toLocaleTimeString();
 function getSubscriptionEntriesFromFirebase() {
     let ref = firebase.database().ref('subscription-entries');
     ref.on("value", function(snapshot) {
-  console.log(snapshot.val());
   const values = Object.values(snapshot.val());
-  document.getElementById("demo").innerHTML = values;
   
   
-  let para = document.createElement("p");   
-  let node = document.createTextNode("This is new.");
-  para.appendChild(node);
+  let para = document.getElementById("demo");  
+  para.innerHTML = '';
+  values.forEach(val=>{
+      let div = document.createElement('div');
+    let node = document.createTextNode(val);
+    div.appendChild(node);
+    para.appendChild(div);
+    console.log('aadded', val);
 
-  let element = document.getElementById("div1");
-  element.appendChild(para);
-
+  }) 
 
 }, function (errorObject) {
   console.log("The read failed: " + errorObject.code);
