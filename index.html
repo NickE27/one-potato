@@ -3,5 +3,59 @@
         <link rel="stylesheet" type="text/css" href="main.css">
     </head>
     <body>
-        <h2> One potato... </h2>
+        <h2 onclick = "saveToFirebase()"> One potato... </h2>
+        <p id="demo"></p>
+        <div id="div1"/>
+        <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>  
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCnzHm9k4aaA-BkM0Y402ZeStCB7-Jx1gE",
+    authDomain: "frisking-frenzy.firebaseapp.com",
+    databaseURL: "https://frisking-frenzy.firebaseio.com",
+    projectId: "frisking-frenzy",
+    storageBucket: "frisking-frenzy.appspot.com",
+    messagingSenderId: "962102921607"
+  };
+  firebase.initializeApp(config);
+    console.log('initialised firebase');
+function saveToFirebase() {
+    console.log('saving...');
+
+const date = new Date(Date.now()).toLocaleTimeString();
+    firebase.database().ref('subscription-entries').push(date)
+        .then(function(snapshot) {console.log('saved email', date);
+        console.log(snapshot);
+        }, function(error) {
+            console.log('error' + error);
+        });
+}
+
+function getSubscriptionEntriesFromFirebase() {
+    let ref = firebase.database().ref('subscription-entries');
+    ref.on("value", function(snapshot) {
+  console.log(snapshot.val());
+  const values = Object.values(snapshot.val());
+  document.getElementById("demo").innerHTML = values;
+  
+  
+  let para = document.createElement("p");   
+  let node = document.createTextNode("This is new.");
+  para.appendChild(node);
+
+  let element = document.getElementById("div1");
+  element.appendChild(para);
+
+
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+}
+//saveToFirebase("thisismy@email.com");
+getSubscriptionEntriesFromFirebase();
+
+
+
+
+</script>
 </body>
