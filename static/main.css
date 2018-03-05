@@ -1,0 +1,22 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background: orange;
+    padding: 32px;
+    font-size: 40px;
+    color: white;
+}
+
+h2 {
+    cursor: pointer;      
+    transition: color 0.3s ease-in-out;
+}
+
+h2:hover {
+    color: purple;
+}
+
+p {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+}
